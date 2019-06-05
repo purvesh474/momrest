@@ -35,6 +35,8 @@ public class CompletedMeeting {
 	//Need To change name in db
 	private String catagory;
 	
+	private  int reccuring;
+	
 	private int recurringapproch;
 	
 	private int referancemeeting;
@@ -54,6 +56,15 @@ public class CompletedMeeting {
 	private int updatedby;
 	
 	private int istaskcreated;
+
+	
+	public int getReccuring() {
+		return reccuring;
+	}
+
+	public void setReccuring(int reccuring) {
+		this.reccuring = reccuring;
+	}
 
 	public int getId() {
 		return id;
