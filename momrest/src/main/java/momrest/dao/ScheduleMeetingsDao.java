@@ -19,7 +19,7 @@ public class ScheduleMeetingsDao implements IScheduledMeeting {
 	@Override
 	public List<ScheduleMeetings> getAllMeeting() {
 		
-		String hql="From ScheduledMeeting as sm ORDER BY sm.createddate";
+		String hql="From ScheduleMeetings as sm ORDER BY sm.createddate";
 		List<ScheduleMeetings> meeting=entityManager.createQuery(hql).getResultList();
 		return meeting;
 	}
@@ -44,7 +44,7 @@ public class ScheduleMeetingsDao implements IScheduledMeeting {
 		meetingByID.setPlace(meeting.getPlace());
 		meetingByID.setNote(meeting.getNote());
 		meetingByID.setFile(meeting.getFile());
-		meetingByID.setCategory(meeting.getCategory());
+		meetingByID.setCatagory(meeting.getCatagory());
 		meetingByID.setRecurring(meeting.getRecurring());
 		meetingByID.setRecurringapproch(meeting.getRecurringapproch());
 		meetingByID.setReferancemeeting(meeting.getReferancemeeting());

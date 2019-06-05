@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -85,6 +86,15 @@ public class UserDao implements IUserDao {
 		List<User> user=entityManager.createQuery(hql).setParameter(1, email).setParameter(2, password).getResultList();
 		
 		return user;
+	}
+
+	@Override
+	public int getLastInsertedID() {
+		/*
+		 * String hql="select max(u.userid) from User u"; Integer
+		 * lastId=(Integer)entityManager.createQuery(hql);
+		 */
+		return 0;
 	}
 
 }

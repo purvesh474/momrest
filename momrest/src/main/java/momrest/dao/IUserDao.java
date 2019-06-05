@@ -1,5 +1,6 @@
 package momrest.dao;
 
+import java.io.Serializable;
 import java.util.List;
 
 import momrest.model.User;
@@ -15,4 +16,6 @@ public interface IUserDao {
 	boolean userExists(String email);
 	int getUsedIdFromEmail(String email);
 	List<User> userLogin(String email,String password);
+	int getLastInsertedID();
+	
 }

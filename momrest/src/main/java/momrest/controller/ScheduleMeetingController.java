@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -57,7 +58,7 @@ public class ScheduleMeetingController {
 		return new ResponseEntity<Void>(headers,HttpStatus.CREATED);
 	}
 	
-	@PostMapping("update/{meetingid}")
+	@PutMapping("update/{meetingid}")
 	public ResponseEntity<ScheduleMeetings> updateMeeting(@PathVariable(value="meetingid") int meetingid,@RequestBody ScheduleMeetings meeting){
 		try {
 			meetingServ.updateMeeting(meeting, meetingid);
