@@ -12,4 +12,5 @@ public interface IUserService {
 	void updateUser(User user);
 	void deleteUser(int id);
 	List<User> checkUserLogin(String email,String password);
+	List<User> searchUserEmail(String email);
 }

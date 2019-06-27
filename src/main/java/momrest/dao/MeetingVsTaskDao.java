@@ -12,7 +12,7 @@ import momrest.model.MeetingVsTask;
 
 @Transactional
 @Repository
-public class MeetingVsTaskDao implements IMeetingVsTask {
+public class MeetingVsTaskDao implements IMeetingVsTaskDao {
 
 	@PersistenceContext
 	private EntityManager entityManager;
@@ -37,9 +37,16 @@ public class MeetingVsTaskDao implements IMeetingVsTask {
 	}
 
 	@Override
-	public void updateMeetingVsTask(MeetingVsTask MVT) {
-		
-
+	public void updateMeetingVsTask(MeetingVsTask MVT,int taskid) {
+		MeetingVsTask meetingvstaskObj=getMVTById(taskid);
+		meetingvstaskObj.setResponsible(MVT.getResponsible());
+		meetingvstaskObj.setAssignee(MVT.getAssignee());
+		meetingvstaskObj.setDuedate(MVT.getDuedate());
+		meetingvstaskObj.setSubject(MVT.getSubject());
+		meetingvstaskObj.setDescription(MVT.getDescription());
+		meetingvstaskObj.setStatus(MVT.getStatus());
+		meetingvstaskObj.setUpdatedby(MVT.getUpdatedby());
+		entityManager.flush();
 	}
 
 }

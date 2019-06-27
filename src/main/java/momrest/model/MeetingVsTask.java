@@ -36,7 +36,7 @@ public class MeetingVsTask {
 	private Timestamp updateddate;
 	
 	//Change DataType in DB
-	private int updatedby;
+	private String updatedby;
 
 	public int getTaskid() {
 		return taskid;
@@ -118,11 +118,11 @@ public class MeetingVsTask {
 		this.updateddate = updateddate;
 	}
 
-	public int getUpdatedby() {
+	public String getUpdatedby() {
 		return updatedby;
 	}
 
-	public void setUpdatedby(int updatedby) {
+	public void setUpdatedby(String updatedby) {
 		this.updatedby = updatedby;
 	}
 	

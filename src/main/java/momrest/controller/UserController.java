@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.jms.artemis.ArtemisNoOpBindingRegistry;
+import org.springframework.cache.CacheManager;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -32,6 +33,9 @@ import momrest.service.IUserService;
 @RequestMapping("user")
 public class UserController {
 
+    @Autowired
+    private CacheManager cacheManager;
+	
 	@Autowired
 	private IUserService userServ;
 	
@@ -131,6 +135,16 @@ public class UserController {
 			return new ResponseEntity<User>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return new ResponseEntity<User>(user.get(0),HttpStatus.OK);
+	}
+	
+	
+	
+	//Clear all Cache using Cache manager
+	@RequestMapping(value="clearCache")
+	public void clearCache() {
+		for(String name:cacheManager.getCacheNames()) {
+			cacheManager.getCache(name).clear();
+		}
 	}
 	
 	

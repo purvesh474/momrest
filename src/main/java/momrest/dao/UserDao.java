@@ -6,6 +6,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +21,7 @@ public class UserDao implements IUserDao {
 	private EntityManager entityManager;
 
 	@Override
+	@Cacheable(value="users")
 	public List<User> getAllUsers() {
 		String hql = "FROM User as u ORDER BY u.userid";
 
@@ -26,12 +29,14 @@ public class UserDao implements IUserDao {
 	}
 
 	@Override
+	@CacheEvict(value="users",allEntries=true)
 	public void addUser(User user) {
 		entityManager.persist(user);
 
 	}
 
 	@Override
+	@CacheEvict(value="users",allEntries=true)
 	public void updateUser(User user) {
 		int userid=getUsedIdFromEmail(user.getEmail());
 		user.setUserid(userid);
@@ -53,6 +58,7 @@ public class UserDao implements IUserDao {
 	}
 
 	@Override
+	@CacheEvict(value="users",allEntries=true)
 	public void deleteUser(int id) {
 		entityManager.remove(getUserByID(id));
 
@@ -95,6 +101,15 @@ public class UserDao implements IUserDao {
 		 * lastId=(Integer)entityManager.createQuery(hql);
 		 */
 		return 0;
+	}
+
+	@Override
+	@Cacheable(value="email")
+	public List<User> searchUserByEmailID(String email) {
+		String hql="select email From User as u where u.email like ?1";
+		List<User> userList=entityManager.createQuery(hql).setParameter(1, "%"+email+"%").getResultList();
+		
+		return userList;
 	}
 
 }

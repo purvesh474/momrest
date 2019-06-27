@@ -17,5 +17,7 @@ public interface IUserDao {
 	int getUsedIdFromEmail(String email);
 	List<User> userLogin(String email,String password);
 	int getLastInsertedID();
+	List<User> searchUserByEmailID(String email);
+	
 	
 }

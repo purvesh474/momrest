@@ -59,4 +59,11 @@ public class UserService implements IUserService {
 		return user;
 	}
 
+
+	@Override
+	public List<User> searchUserEmail(String email) {
+		List<User> userList=userDao.searchUserByEmailID(email);
+		return userList;
+	}
+
 }
