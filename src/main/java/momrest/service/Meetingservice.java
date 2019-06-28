@@ -15,9 +15,9 @@ public class Meetingservice implements IMeetingservice {
 	IMeetings meetingDao;
 
 	@Override
-	public List<Meetings> getAllMeeting(String owner) {
+	public List<Meetings> getAllUserMeeting(String owner) {
 		
-		return meetingDao.getAllMeeting(owner);
+		return meetingDao.getAllUserMeeting(owner);
 	}
 
 	@Override
@@ -37,6 +37,12 @@ public class Meetingservice implements IMeetingservice {
 		meetingDao.updateMeeting(meeting, id);
 		return true;
 
+	}
+
+	@Override
+	public List<Meetings> getAllMeeting() {
+		// TODO Auto-generated method stub
+		return meetingDao.getAllMeeting();
 	}
 
 }

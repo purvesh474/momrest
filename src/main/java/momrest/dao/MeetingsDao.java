@@ -17,7 +17,7 @@ public class MeetingsDao implements IMeetings {
 
 	
 	@Override
-	public List<Meetings> getAllMeeting(String owner) {
+	public List<Meetings> getAllUserMeeting(String owner) {
 		List<Meetings> meeting=null;
 		String hql="From Meetings as sm where sm.owner=?1 ORDER BY sm.createddate";
 		try {
@@ -63,6 +63,19 @@ public class MeetingsDao implements IMeetings {
 		meetingByID.setIstaskcreated(meeting.getIstaskcreated());
 		entityManager.flush();
 
+	}
+
+	@Override
+	public List<Meetings> getAllMeeting() {
+		List<Meetings> meeting=null;
+		String hql="From Meetings as sm  ORDER BY sm.createddate";
+		try {
+		meeting=entityManager.createQuery(hql).getResultList();
+		
+		}
+		catch (Exception e) {
+			System.out.println(e);
+		}return meeting;
 	}
 
 	

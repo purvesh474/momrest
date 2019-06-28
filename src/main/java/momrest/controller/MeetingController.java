@@ -31,11 +31,27 @@ public class MeetingController {
 	@Autowired
 	private IUserService userServ;
 	
-	@GetMapping("all/{owner}")
+	
+	@GetMapping("all")
+	public ResponseEntity<List<Meetings>> getAllMeetings(){
+		List<Meetings> meetingList=null;
+		try {
+			meetingList=meetingServ.getAllMeeting();
+		if(meetingList.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		}catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		System.out.println("Metting Size is " +meetingList.size());
+		return new ResponseEntity<List<Meetings>>(meetingList,HttpStatus.OK);
+	}
+	
+	@GetMapping("all/eid/{owner}")
 	public ResponseEntity<List<Meetings>> getAllMeetings(@PathVariable(value="owner")String owner){
 		List<Meetings> meetingList=null;
 		try {
-			meetingList=meetingServ.getAllMeeting(owner);
+			meetingList=meetingServ.getAllUserMeeting(owner);
 		if(meetingList.isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}

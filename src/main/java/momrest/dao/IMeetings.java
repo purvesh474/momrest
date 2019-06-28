@@ -6,11 +6,11 @@ import momrest.model.Meetings;
 
 public interface IMeetings{
 
-	List<Meetings> getAllMeeting(String owner);
+	List<Meetings> getAllUserMeeting(String owner);
 	Meetings getMeetingById(int id);
 	void addMeeting(Meetings meeting);
 	void updateMeeting(Meetings meeting,int id);
-	
+	List<Meetings> getAllMeeting();
 	
 	
 }
