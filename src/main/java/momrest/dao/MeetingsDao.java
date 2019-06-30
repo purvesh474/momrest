@@ -78,6 +78,16 @@ public class MeetingsDao implements IMeetings {
 		}return meeting;
 	}
 
+	public int getLatestMeetingID() {
+		int meetingid=0;
+		String hql="FROM Meetings  as m where m.meetingid=(select max(mm.meetingid) from Meetings as mm)";
+		List<Meetings> listObj=entityManager.createQuery(hql).getResultList();
+		if(listObj.size()>0) {
+			meetingid=listObj.get(0).getMeetingid();
+		}
+		return meetingid;
+		
+	}
 	
 
 }

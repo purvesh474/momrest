@@ -10,7 +10,7 @@ public interface IParticipantsMeeting {
 	void addPVM(ParticipantsVsMeeting pvm);
 	List<ParticipantsVsMeeting> getAllPVMByMeetingId(int meetingid);
 	void updatePVM(ParticipantsVsMeeting pvm);
-	List<ParticipantsVsMeeting> getPVMUidMid(int userid,int meetingid); 
-	
+	List<ParticipantsVsMeeting> getPVMUidMid(String userid,int meetingid); 
+	int getMeetingCount(String userid);
 	
 }

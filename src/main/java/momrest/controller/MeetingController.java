@@ -17,8 +17,10 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import momrest.model.Meetings;
+import momrest.model.ParticipantsVsMeeting;
 import momrest.model.User;
 import momrest.service.IMeetingservice;
+import momrest.service.IParticipantsVsMeetingService;
 import momrest.service.IUserService;
 
 @RestController
@@ -27,6 +29,10 @@ public class MeetingController {
 
 	@Autowired
 	private IMeetingservice meetingServ;
+	
+	@Autowired
+	private IParticipantsVsMeetingService pvmserv;
+	
 	
 	@Autowired
 	private IUserService userServ;
@@ -83,6 +89,25 @@ public class MeetingController {
 	public ResponseEntity<Void> addMeeting(@RequestBody Meetings meeting,UriComponentsBuilder builder){
 		try {
 		boolean flag=meetingServ.addMeeting(meeting);
+		if(flag==true) {
+			ParticipantsVsMeeting pvm=null;
+		int meetingId=meetingServ.getLatestMeetingID();
+		
+		String participants=meeting.getParticipants();
+		
+		System.out.println("Partcipants name is "+participants);
+		
+		String[] partiCipantsArray=participants.split(",");
+		
+		for(String p : partiCipantsArray) {
+			pvm=new ParticipantsVsMeeting();
+			pvm.setMeetingid(meetingId);
+			pvm.setUserid(p);
+			pvm.setStatus(0);
+			
+			pvmserv.addPVM(pvm);
+		}
+		}
 		if(flag==false) {
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}

@@ -11,6 +11,7 @@ public interface IMeetings{
 	void addMeeting(Meetings meeting);
 	void updateMeeting(Meetings meeting,int id);
 	List<Meetings> getAllMeeting();
+	int getLatestMeetingID();
 	
 	
 }

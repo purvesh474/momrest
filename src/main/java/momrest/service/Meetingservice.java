@@ -45,4 +45,10 @@ public class Meetingservice implements IMeetingservice {
 		return meetingDao.getAllMeeting();
 	}
 
+	@Override
+	public int getLatestMeetingID() {
+		
+		return meetingDao.getLatestMeetingID();
+	}
+
 }

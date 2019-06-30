@@ -11,5 +11,6 @@ public interface IParticipantsVsMeetingService {
 	List<ParticipantsVsMeeting> getAllPVMByMeetingId(int meetingid);
 	void updatePVM(ParticipantsVsMeeting pvm);
 	List<ParticipantsVsMeeting> getPVMUidMid(int userid,int meetingid);
+	public int getMeetingCount(String userid);
 	
 }

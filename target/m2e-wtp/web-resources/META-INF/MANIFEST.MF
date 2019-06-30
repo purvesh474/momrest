@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Implementation-Title: momrest
 Implementation-Version: 0.0.1-SNAPSHOT
-Built-By: eliteaaa
+Built-By: Shubham
 Implementation-Vendor-Id: pksh
-Build-Jdk: 1.8.0_65
+Build-Jdk: 1.8.0_201
 Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
  ot-starter-parent/momrest
 Created-By: Maven Integration for Eclipse

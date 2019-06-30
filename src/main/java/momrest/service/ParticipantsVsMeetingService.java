@@ -45,4 +45,10 @@ public class ParticipantsVsMeetingService implements IParticipantsVsMeetingServi
 		return null;
 	}
 
+	@Override
+	public int getMeetingCount(String userid) {
+		
+		return pvmdao.getMeetingCount(userid);
+	}
+
 }

@@ -74,6 +74,17 @@ public class ParticipantsVsMeetingController {
 		return new ResponseEntity<List<ParticipantsVsMeeting>>(pvmList,HttpStatus.OK);
 	}
 	
+	@GetMapping("meetingcount/{userid}")
+	public ResponseEntity<Integer> getMeetingCount(@PathVariable(value="userid") String userid){
+		int count=0;
+		try {
+			count=pvmserv.getMeetingCount(userid);
+		}catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<Integer>(count,HttpStatus.OK);
+	}
+	
 	@GetMapping("all/mid/{meetingid}")
 	public ResponseEntity<List<ParticipantsVsMeeting>> getAllPVMByMeetingId(@PathVariable(value="meetingid") int meetingid){
 		List<ParticipantsVsMeeting> pvmList=null;

@@ -48,10 +48,17 @@ public class ParticipantsVsMeetingDao implements IParticipantsMeeting {
 	}
 
 	@Override
-	public List<ParticipantsVsMeeting> getPVMUidMid(int userid, int meetingid) {
+	public List<ParticipantsVsMeeting> getPVMUidMid(String userid, int meetingid) {
 		String hql="FROM ParticipantsVsMeeting as p where p.userid=?1 and p.meetingid=?2";
 		List<ParticipantsVsMeeting> pvm=entityManager.createQuery(hql).setParameter(1, userid).setParameter(2, meetingid).getResultList();
 		return pvm;
+	}
+
+	@Override
+	public int getMeetingCount(String userid) {
+		String hql="FROM ParticipantsVsMeeting as p where p.userid=?1";
+		List<ParticipantsVsMeeting> listObj=entityManager.createQuery(hql).setParameter(1, userid).getResultList();
+			return listObj.size();
 	}
 
 }

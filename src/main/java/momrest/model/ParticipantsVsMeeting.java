@@ -16,7 +16,7 @@ public class ParticipantsVsMeeting {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 	
-	private int userid;
+	private String userid;
 	
 	private int meetingid;
 	
@@ -34,11 +34,11 @@ public class ParticipantsVsMeeting {
 		this.id = id;
 	}
 
-	public int getUserid() {
+	public String getUserid() {
 		return userid;
 	}
 
-	public void setUserid(int userid) {
+	public void setUserid(String userid) {
 		this.userid = userid;
 	}
 
