@@ -26,7 +26,8 @@ public class MeetingsDao implements IMeetings {
 		}
 		catch (Exception e) {
 			System.out.println(e);
-		}return meeting;
+		}
+		return meeting;
 	}
 
 	@Override
@@ -45,7 +46,7 @@ public class MeetingsDao implements IMeetings {
 	public void updateMeeting(Meetings meeting , int id) {
 		Meetings meetingByID= getMeetingById(id);
 		meetingByID.setSubject(meeting.getSubject());
-		meetingByID.setParticipants(meeting.getParticipants());
+		//meetingByID.setParticipants(meeting.getParticipants());
 		meetingByID.setPlace(meeting.getPlace());
 		meetingByID.setNote(meeting.getNote());
 		meetingByID.setFile(meeting.getFile());
@@ -86,6 +87,14 @@ public class MeetingsDao implements IMeetings {
 			meetingid=listObj.get(0).getMeetingid();
 		}
 		return meetingid;
+		
+	}
+
+	@Override
+	public void deleteParticipants(String participants) {
+		String sql="delete from Meetings where userid=?1";
+		entityManager.createQuery(sql);
+		
 		
 	}
 	

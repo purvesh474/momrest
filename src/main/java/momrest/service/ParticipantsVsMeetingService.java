@@ -50,5 +50,9 @@ public class ParticipantsVsMeetingService implements IParticipantsVsMeetingServi
 		
 		return pvmdao.getMeetingCount(userid);
 	}
+	
+	public int deleteParticipants(String participants,int meetingid) {
+		return pvmdao.deleteParticipants(participants,meetingid);
+	}
 
 }

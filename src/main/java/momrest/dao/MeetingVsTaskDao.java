@@ -48,5 +48,12 @@ public class MeetingVsTaskDao implements IMeetingVsTaskDao {
 		meetingvstaskObj.setUpdatedby(MVT.getUpdatedby());
 		entityManager.flush();
 	}
+	
+	public int getLatesteInsertedValue() {
+		String hql="FROM MeetingVsTask as m where m.taskid=(select max(mm.taskid) from MeetingVsTask as mm)";
+		List<MeetingVsTask> listObj=entityManager.createQuery(hql).getResultList();
+		return listObj.get(0).getTaskid();
+	
+	}
 
 }

@@ -184,5 +184,17 @@ public class Meetings {
 	public void setUpdatedby(String updatedby) {
 		this.updatedby = updatedby;
 	}
+	@Override
+	public String toString() {
+		return "Meetings [meetingid=" + meetingid + ", subject=" + subject + ", participants=" + participants
+				+ ", owner=" + owner + ", place=" + place + ", note=" + note + ", file=" + file + ", category="
+				+ category + ", recurring=" + recurring + ", recurringapproch=" + recurringapproch
+				+ ", referancemeeting=" + referancemeeting + ", custom1=" + custom1 + ", custom2=" + custom2
+				+ ", custom3=" + custom3 + ", startdate=" + startdate + ", enddate=" + enddate + ", createddate="
+				+ createddate + ", updateddate=" + updateddate + ", updatedby=" + updatedby + ", status=" + status
+				+ ", istaskcreated=" + istaskcreated + "]";
+	}
+	
+	
 
 }

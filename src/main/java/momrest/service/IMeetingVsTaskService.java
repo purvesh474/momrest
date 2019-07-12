@@ -11,5 +11,5 @@ public interface IMeetingVsTaskService {
 	MeetingVsTask getMeetingVsTaskById(int taskid);
 	boolean addMeetingVsTask(MeetingVsTask mvt);
 	void updateMeetingBVsTask(MeetingVsTask mvt,int taskid);
-	
+	public int getLatesteInsertedValue();
 }

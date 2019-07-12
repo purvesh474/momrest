@@ -51,4 +51,6 @@ public class Meetingservice implements IMeetingservice {
 		return meetingDao.getLatestMeetingID();
 	}
 
+	
+
 }

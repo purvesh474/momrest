@@ -1,11 +1,14 @@
 package momrest.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -88,6 +91,7 @@ public class MeetingController {
 	@PostMapping("add")
 	public ResponseEntity<Void> addMeeting(@RequestBody Meetings meeting,UriComponentsBuilder builder){
 		try {
+			System.out.println("Meeting Object: "+meeting.toString());
 		boolean flag=meetingServ.addMeeting(meeting);
 		if(flag==true) {
 			ParticipantsVsMeeting pvm=null;
@@ -120,9 +124,57 @@ public class MeetingController {
 	}
 	
 	@PutMapping("update/{meetingid}")
-	public ResponseEntity<Meetings> updateMeeting(@PathVariable(value="meetingid") int meetingid,@RequestBody Meetings meeting){
+	public ResponseEntity<Meetings> updateMeeting(@PathVariable(value="meetingid") int meetingid,@RequestBody Meetings meeting,@RequestBody HashMap<String, List<String>> updatePart){
+		List<String> newParticipantList=new ArrayList<>();
+		List<String> deleteParticipantList=new ArrayList<>();
+		List<String> sameParticipantList=new ArrayList<>();
+		
+		newParticipantList=updatePart.get("addNewParticipants");
+		deleteParticipantList=updatePart.get("deleteParticipants");
+		sameParticipantList=updatePart.get("sameParticipants");
+		
+		StringBuilder Participants=new StringBuilder();
+		
+		if(deleteParticipantList!=null && deleteParticipantList.size()>0) {
+		sameParticipantList.removeAll(deleteParticipantList);
+		}
+		
+		
+		if(newParticipantList!=null && newParticipantList.size()>0) {
+			
+			sameParticipantList.addAll(newParticipantList);
+		}
+		
+		if(sameParticipantList!=null && sameParticipantList.size()>0) {
+		for(int i=0;i<sameParticipantList.size();i++) {
+			if(i<sameParticipantList.size()) {
+			Participants.append(sameParticipantList.get(i));
+			Participants.append(",");
+			}else {
+				Participants.append(sameParticipantList.get(i));
+			}
+		}
+		}
+		meeting.setParticipants(Participants.toString());
+		ParticipantsVsMeeting pvm=null;
+		int i=0;
 		try {
+			for(String s: deleteParticipantList) {
+				
+			i=pvmserv.deleteParticipants(s, meetingid);
+			
+			}
 			meetingServ.updateMeeting(meeting, meetingid);
+			
+			
+			for(String s : newParticipantList ) {
+				pvm=new ParticipantsVsMeeting();
+				pvm.setUserid(s);
+				pvm.setMeetingid(meetingid);
+				pvm.setStatus(0);
+				pvmserv.addPVM(pvm);
+				
+			}
 		}catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -142,6 +194,19 @@ public class MeetingController {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return new ResponseEntity<List<User>>(userList,HttpStatus.OK);
+	}
+	
+	@DeleteMapping("delete/{participant}/{meetingid}")
+	public ResponseEntity<Integer> deleteParticipants(@PathVariable(value="participant") String participant ,@PathVariable(value="meetingid") int meetingid){
+		int i=0;
+		try {
+			System.out.println("Called "+participant + " "+meetingid);
+			
+		i=pvmserv.deleteParticipants(participant,meetingid);
+		}catch (Exception e) {
+			System.out.println(e);
+		}
+		return new ResponseEntity<Integer>(i,HttpStatus.OK);
 	}
 	
 }

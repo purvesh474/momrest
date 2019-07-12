@@ -9,4 +9,6 @@ public interface IParticipantsVsTaskDao {
 	List<ParticipantsVsTask> getAllTaskOfParticipants(String userid);
 	void addPVT(ParticipantsVsTask pvt);
 	void updatePVT(ParticipantsVsTask pvt);
+	int getTaskCount(String userid);
 }	
+

@@ -12,4 +12,5 @@ public interface IMeetingservice {
 	boolean addMeeting(Meetings meeting);
 	boolean updateMeeting(Meetings meeting,int id);
 	public int getLatestMeetingID();
+	
 }

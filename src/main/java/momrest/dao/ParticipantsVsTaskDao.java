@@ -46,6 +46,14 @@ public class ParticipantsVsTaskDao implements IParticipantsVsTaskDao {
 		return pvtobj;
 		
 	}
+
+	@Override
+	public int getTaskCount(String userid) {
+		String hql="FROM ParticipantsVsTask as p where p.userid=?1";
+		List<ParticipantsVsTask> listObj=entityManager.createQuery(hql).setParameter(1, userid).getResultList();
+		
+		return listObj.size();
+	}
 	
 	
 

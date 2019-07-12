@@ -18,8 +18,10 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import momrest.model.MeetingVsTask;
 import momrest.model.Meetings;
+import momrest.model.ParticipantsVsTask;
 import momrest.model.User;
 import momrest.service.IMeetingVsTaskService;
+import momrest.service.IParticipantsVsTaskService;
 
 @RestController
 @RequestMapping("mvt")
@@ -30,6 +32,9 @@ public class MeetingVsTaskController {
 
 	@Autowired
 	private IMeetingVsTaskService mvtServ;
+	
+	@Autowired
+	IParticipantsVsTaskService pvtServ;
 	
 	@GetMapping("all")
 	public ResponseEntity<List<MeetingVsTask>> getAllMvt(){
@@ -64,8 +69,34 @@ public class MeetingVsTaskController {
 	@PostMapping("add")
 	public ResponseEntity<Void> addMVT(@RequestBody MeetingVsTask mvt,UriComponentsBuilder builder){
 		boolean flag=false;
+		
+		String[] ResponsibleArray=null;
 		try {
 			flag=mvtServ.addMeetingVsTask(mvt);
+			if(flag==true) {
+				ParticipantsVsTask pvt=null;
+				int taskid=mvtServ.getLatesteInsertedValue();
+				String Responsible=mvt.getResponsible();
+				if(Responsible.contains(",")) {
+					ResponsibleArray=Responsible.split(",");
+				}
+				if(ResponsibleArray.length>=1 && ResponsibleArray!=null) {
+					for(String p : ResponsibleArray) {
+						pvt=new ParticipantsVsTask();
+						pvt.setTaskid(taskid);
+						pvt.setUserid(p);
+						pvt.setStatus(0);
+						pvtServ.addPVT(pvt);
+					}
+				}else {
+					pvt=new ParticipantsVsTask();
+					pvt.setTaskid(taskid);
+					pvt.setUserid(Responsible);
+					pvt.setStatus(0);
+					pvtServ.addPVT(pvt);
+				}
+				System.out.println("Latest Task id is "+taskid);
+			}
 			if(flag==false) {
 				return new ResponseEntity<>(HttpStatus.CONFLICT);
 			}
@@ -86,5 +117,17 @@ public class MeetingVsTaskController {
 		}
 		
 		return new ResponseEntity<MeetingVsTask>(mvt,HttpStatus.OK);
+	}
+	
+	
+	@GetMapping("taskcount/{userid}")
+	public ResponseEntity<Integer> getTaskCount(@PathVariable(value="userid") String userid){
+		int count=0;
+		try {
+			count=pvtServ.getTaskCount(userid);
+		}catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<Integer>(count,HttpStatus.OK);
 	}
 }

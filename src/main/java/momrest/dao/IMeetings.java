@@ -12,6 +12,7 @@ public interface IMeetings{
 	void updateMeeting(Meetings meeting,int id);
 	List<Meetings> getAllMeeting();
 	int getLatestMeetingID();
+	void deleteParticipants(String participants);
 	
 	
 }

@@ -12,5 +12,5 @@ public interface IParticipantsVsMeetingService {
 	void updatePVM(ParticipantsVsMeeting pvm);
 	List<ParticipantsVsMeeting> getPVMUidMid(int userid,int meetingid);
 	public int getMeetingCount(String userid);
-	
+	public int deleteParticipants(String participants,int meetingid);
 }

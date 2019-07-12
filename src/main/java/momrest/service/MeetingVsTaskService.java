@@ -37,4 +37,10 @@ public class MeetingVsTaskService implements IMeetingVsTaskService {
 
 	}
 
+	@Override
+	public int getLatesteInsertedValue() {
+		
+		return meetingvstaskDao.getLatesteInsertedValue();
+	}
+
 }

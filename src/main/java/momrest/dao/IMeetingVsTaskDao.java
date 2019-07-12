@@ -10,5 +10,5 @@ public interface IMeetingVsTaskDao {
 	MeetingVsTask getMVTById(int taskid);
 	void addMeetingVsTask(MeetingVsTask MVT);
 	void updateMeetingVsTask(MeetingVsTask MVT,int taskid);
-
+	public int getLatesteInsertedValue();
 }
