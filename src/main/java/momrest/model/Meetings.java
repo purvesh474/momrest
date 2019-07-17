@@ -3,11 +3,14 @@ package momrest.model;
 
 import java.sql.Timestamp;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.GeneratorType;
 
@@ -36,14 +39,16 @@ public class Meetings {
 	
 	private int recurringapproch;
 
-	private int referancemeeting;
+	private String referancemeeting;
 	
 	private String custom1;
 	private String custom2;
 	private String custom3;
 	
 	//startdate
+	
 	private Timestamp startdate;
+	
 	private Timestamp enddate;
 	
 	private Timestamp createddate;
@@ -141,10 +146,10 @@ public class Meetings {
 	public void setRecurringapproch(int recurringapproch) {
 		this.recurringapproch = recurringapproch;
 	}
-	public int getReferancemeeting() {
+	public String getReferancemeeting() {
 		return referancemeeting;
 	}
-	public void setReferancemeeting(int referancemeeting) {
+	public void setReferancemeeting(String referancemeeting) {
 		this.referancemeeting = referancemeeting;
 	}
 	public String getCustom1() {

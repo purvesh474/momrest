@@ -19,9 +19,9 @@ public class MeetingsDao implements IMeetings {
 	@Override
 	public List<Meetings> getAllUserMeeting(String owner) {
 		List<Meetings> meeting=null;
-		String hql="From Meetings as sm where sm.owner=?1 ORDER BY sm.createddate";
+		String hql="From Meetings as sm where sm.owner=?1 or sm.participants LIKE ?2 ORDER BY sm.createddate DESC";
 		try {
-		meeting=entityManager.createQuery(hql).setParameter(1, owner).getResultList();
+		meeting=entityManager.createQuery(hql).setParameter(1, owner).setParameter(2, "%"+owner+"%").getResultList();
 		
 		}
 		catch (Exception e) {
@@ -90,13 +90,9 @@ public class MeetingsDao implements IMeetings {
 		
 	}
 
-	@Override
-	public void deleteParticipants(String participants) {
-		String sql="delete from Meetings where userid=?1";
-		entityManager.createQuery(sql);
-		
-		
-	}
+
+
+	
 	
 
 }
