@@ -66,4 +66,11 @@ public class UserService implements IUserService {
 		return userList;
 	}
 
+
+	@Override
+	public boolean isGuestuser(String email) {
+		
+		return userDao.isGuestUser(email);
+	}
+
 }

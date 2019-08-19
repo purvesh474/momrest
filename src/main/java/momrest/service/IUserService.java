@@ -13,4 +13,5 @@ public interface IUserService {
 	void deleteUser(int id);
 	List<User> checkUserLogin(String email,String password);
 	List<User> searchUserEmail(String email);
+	boolean isGuestuser(String email);
 }

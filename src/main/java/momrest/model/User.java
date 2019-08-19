@@ -38,6 +38,22 @@ public class User implements Serializable {
 	private Timestamp createddate;
 	
 	private Timestamp updateddate;
+	
+	private String guest;
+	
+	
+
+	public String getGuest() {
+		return guest;
+	}
+
+	public void setGuest(String guest) {
+		this.guest = guest;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 
 	public int getUserid() {
 		return userid;

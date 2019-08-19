@@ -50,6 +50,9 @@ public class UserDao implements IUserDao {
 		entityManager.flush();
 
 	}
+	
+	
+	
 
 	@Override
 	public User getUserByID(int id) {
@@ -111,5 +114,15 @@ public class UserDao implements IUserDao {
 		
 		return userList;
 	}
+
+	@Override
+	public boolean isGuestUser(String email) {
+		String s="yes";
+		String hql="from User as u where u.email=?1 and u.guest=?2";
+		int count=entityManager.createQuery(hql).setParameter(1, email).setParameter(2, s).getResultList().size();
+		return count > 0 ? true:false;
+	}
+
+	
 
 }

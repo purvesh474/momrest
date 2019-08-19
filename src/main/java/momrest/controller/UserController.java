@@ -137,6 +137,18 @@ public class UserController {
 		return new ResponseEntity<User>(user.get(0),HttpStatus.OK);
 	}
 	
+	@GetMapping("isGuestUser/{email}")
+	public ResponseEntity<Boolean> isGuestUser(@PathVariable("email") String email){
+		boolean isGuestUser=false;
+		try {
+		 isGuestUser=userServ.isGuestuser(email);
+		}catch (Exception e) {
+			System.out.println(e);
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<Boolean>(isGuestUser,HttpStatus.OK);
+		
+	}
 	
 	
 	//Clear all Cache using Cache manager
