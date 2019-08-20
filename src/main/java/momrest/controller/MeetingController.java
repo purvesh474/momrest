@@ -89,13 +89,14 @@ public class MeetingController {
 	
 	
 	@PostMapping("add")
-	public ResponseEntity<Void> addMeeting(@RequestBody Meetings meeting,UriComponentsBuilder builder){
+	public ResponseEntity<Integer> addMeeting(@RequestBody Meetings meeting,UriComponentsBuilder builder){
+		int meetingId=-1;
 		try {
 			System.out.println("Meeting Object: "+meeting.toString());
 		boolean flag=meetingServ.addMeeting(meeting);
 		if(flag==true) {
 			ParticipantsVsMeeting pvm=null;
-		int meetingId=meetingServ.getLatestMeetingID();
+		 meetingId=meetingServ.getLatestMeetingID();
 		
 		String participants=meeting.getParticipants();
 		
@@ -120,7 +121,7 @@ public class MeetingController {
 		}
 		HttpHeaders headers=new HttpHeaders();
 		headers.setLocation(builder.path("/id/{id}").buildAndExpand(meeting.getMeetingid()).toUri());
-		return new ResponseEntity<Void>(headers,HttpStatus.OK);
+		return new ResponseEntity<Integer>(meetingId,HttpStatus.OK);
 	}
 	
 	@PutMapping("update/{meetingid}")

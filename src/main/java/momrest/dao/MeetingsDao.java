@@ -69,14 +69,15 @@ public class MeetingsDao implements IMeetings {
 	@Override
 	public List<Meetings> getAllMeeting() {
 		List<Meetings> meeting=null;
-		String hql="From Meetings as sm  ORDER BY sm.createddate";
+		String hql="From Meetings as sm  ORDER BY sm.createddate DESC";
 		try {
 		meeting=entityManager.createQuery(hql).getResultList();
 		
 		}
 		catch (Exception e) {
 			System.out.println(e);
-		}return meeting;
+		}
+		return meeting;
 	}
 
 	public int getLatestMeetingID() {
