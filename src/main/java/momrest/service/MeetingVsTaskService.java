@@ -43,4 +43,21 @@ public class MeetingVsTaskService implements IMeetingVsTaskService {
 		return meetingvstaskDao.getLatesteInsertedValue();
 	}
 
+	@Override
+	public int getTaskCountV1(String userid, String tasktype, String date) {
+		return meetingvstaskDao.getTaskCountV1(userid, tasktype, date);
+	}
+
+	@Override
+	public List<MeetingVsTask> getTaskListsV1(String userid, String tasktype, String date) {
+		List<MeetingVsTask> listMeetingVsTask=meetingvstaskDao.getTaskListsV1(userid, tasktype, date);
+		return listMeetingVsTask;
+	}
+
+	@Override
+	public List<MeetingVsTask> getMeetVsTaskByMeetingId(int meetingId) {
+		List<MeetingVsTask> listMeetingVsTask=meetingvstaskDao.getMeetVsTaskByMeetingId(meetingId);
+		return listMeetingVsTask;
+	}
+
 }

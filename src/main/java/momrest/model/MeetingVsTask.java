@@ -17,6 +17,8 @@ public class MeetingVsTask {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int taskid;
 	
+	private String tasktype; 
+	
 	private int meetingid;
 	
 	private String responsible;
@@ -46,6 +48,14 @@ public class MeetingVsTask {
 		this.taskid = taskid;
 	}
 
+	public String getTasktype() {
+		return tasktype;
+	}
+
+	public void setTasktype(String tasktype) {
+		this.tasktype = tasktype;
+	}
+	
 	public int getMeetingid() {
 		return meetingid;
 	}

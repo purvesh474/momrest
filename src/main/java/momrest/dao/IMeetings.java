@@ -12,7 +12,7 @@ public interface IMeetings{
 	void updateMeeting(Meetings meeting,int id);
 	List<Meetings> getAllMeeting();
 	int getLatestMeetingID();
-	
-	
+	public int getMeetingCountV1(String userid, String date);
+	public List<Meetings> getMeetingListsV1(String userid, String date);
 	
 }

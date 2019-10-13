@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import momrest.model.Meetings;
@@ -182,6 +182,19 @@ public class MeetingController {
 		return new ResponseEntity<Meetings>(meeting,HttpStatus.OK);
 	}
 	
+	
+	@PutMapping("updateV1/{meetingid}")
+	public ResponseEntity<Meetings> updateMeetingV1(@PathVariable(value="meetingid") int meetingid ,@RequestBody Meetings meeting){
+		
+		try {
+			meetingServ.updateMeeting(meeting, meetingid);
+		}catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		return new ResponseEntity<Meetings>(meeting,HttpStatus.OK);
+	}
+	
 	@GetMapping("search/{email}")
 	public ResponseEntity<List<User>> searchEmailUser(@PathVariable(value="email") String email ){
 		//System.out.println("Entered in Search method"+email);
@@ -208,6 +221,32 @@ public class MeetingController {
 			System.out.println(e);
 		}
 		return new ResponseEntity<Integer>(i,HttpStatus.OK);
+	}
+	
+	@GetMapping("meetingcountV1/{userid}")
+	public ResponseEntity<Integer> getMeetingCountV1(@PathVariable(value="userid") String userid, @RequestParam(value="date", required = false) String date){
+		int count=0;
+		try {
+			count=meetingServ.getMeetingCountV1(userid, date);
+		}catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<Integer>(count,HttpStatus.OK);
+	}
+	
+	@GetMapping("getmeetinglistV1/{userid}")
+	public ResponseEntity<List<Meetings>> getMeetingListV1(@PathVariable(value="userid") String userid, @RequestParam(value="date", required = false) String date){
+		List<Meetings> meetingList=null;
+		try {
+			meetingList=meetingServ.getMeetingListsV1(userid, date);
+			if(meetingList.isEmpty() || meetingList.size()==0) {
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			}
+			
+		}catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<List<Meetings>>(meetingList,HttpStatus.OK);
 	}
 	
 }

@@ -12,5 +12,7 @@ public interface IMeetingservice {
 	boolean addMeeting(Meetings meeting);
 	boolean updateMeeting(Meetings meeting,int id);
 	public int getLatestMeetingID();
+	public int getMeetingCountV1(String userid, String date);
+	public List<Meetings> getMeetingListsV1(String userid, String date);
 	
 }

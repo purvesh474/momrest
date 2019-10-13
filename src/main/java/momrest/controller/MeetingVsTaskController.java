@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -107,6 +108,18 @@ public class MeetingVsTaskController {
 		
 	}
 	
+	@PostMapping("addV1")
+	public ResponseEntity<Void> addMVTV1(@RequestBody MeetingVsTask mvt,UriComponentsBuilder builder){
+		
+		try {
+				mvtServ.addMeetingVsTask(mvt);
+		}catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<Void>(HttpStatus.OK);
+	}
+		
+	
 	@PutMapping("update/{taskid}")
 	public ResponseEntity<MeetingVsTask> updateMVT(@PathVariable(value="taskid") int taskid ,@RequestBody MeetingVsTask mvt){
 		
@@ -117,6 +130,48 @@ public class MeetingVsTaskController {
 		}
 		
 		return new ResponseEntity<MeetingVsTask>(mvt,HttpStatus.OK);
+	}
+	
+	@GetMapping("taskcountV1/{userid}")
+	public ResponseEntity<Integer> getTaskCountV1(@PathVariable(value="userid") String userid, @RequestParam(value="tasktype", required = false) String tasktype, @RequestParam(value="date", required = false) String date){
+		int count=0;
+		try {
+			count=mvtServ.getTaskCountV1(userid, tasktype, date);
+		}catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<Integer>(count,HttpStatus.OK);
+	}
+	
+	@GetMapping("gettasklistV1/{userid}")
+	public ResponseEntity<List<MeetingVsTask>> getTaskListV1(@PathVariable(value="userid") String userid, @RequestParam(value="tasktype", required = false) String tasktype, @RequestParam(value="date", required = false) String date){
+		List<MeetingVsTask> mvtList=null;
+		try {
+			mvtList=mvtServ.getTaskListsV1(userid, tasktype, date);
+			if(mvtList.isEmpty() || mvtList.size()==0) {
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			}
+			
+		}catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<List<MeetingVsTask>>(mvtList,HttpStatus.OK);
+	}
+	
+	
+	@GetMapping("getMeetVsTaskByMeetingId/{meetingId}")
+	public ResponseEntity<List<MeetingVsTask>> getMeetVsTaskByMeetingId(@PathVariable(value="meetingId") String meetingId){
+		List<MeetingVsTask> mvtList=null;
+		try {
+			mvtList=mvtServ.getMeetVsTaskByMeetingId(Integer.parseInt(meetingId));
+			if(mvtList.isEmpty() || mvtList.size()==0) {
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			}
+			
+		}catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		return new ResponseEntity<List<MeetingVsTask>>(mvtList,HttpStatus.OK);
 	}
 	
 	

@@ -1,9 +1,11 @@
 package momrest.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.transaction.Transactional;
 import momrest.model.*;
 import org.springframework.stereotype.Repository;
@@ -46,7 +48,7 @@ public class MeetingsDao implements IMeetings {
 	public void updateMeeting(Meetings meeting , int id) {
 		Meetings meetingByID= getMeetingById(id);
 		meetingByID.setSubject(meeting.getSubject());
-		//meetingByID.setParticipants(meeting.getParticipants());
+		meetingByID.setParticipants(meeting.getParticipants());
 		meetingByID.setPlace(meeting.getPlace());
 		meetingByID.setNote(meeting.getNote());
 		meetingByID.setFile(meeting.getFile());
@@ -91,8 +93,48 @@ public class MeetingsDao implements IMeetings {
 		
 	}
 
+	@Override
+	public int getMeetingCountV1(String userid, String date) {
+		Query query = null;
+		int count=0;
+		StringBuilder qry = new StringBuilder("SELECT COUNT(*) FROM tblmeeting WHERE (owner=:owner OR participants like :userid)");
+	
+		if(date != null && !date.isEmpty()){
+			qry.append(" AND enddate >= NOW()");
+		}
+		qry.append(" order by createddate desc");
+		
+		query = entityManager.createNativeQuery(qry.toString());	
+		query.setParameter("owner", userid);
+		query.setParameter("userid", "%"+userid+"%");	
+		
+		count = ((Number) query.getSingleResult()).intValue();
+		return count;
+
+	}
+
+	@Override
+	public List<Meetings> getMeetingListsV1(String userid, String date) {
+		StringBuilder qry = new StringBuilder("SELECT * FROM tblmeeting WHERE (owner=:owner OR participants like :userid)");
+		List<Meetings> meetingList = new ArrayList<Meetings>();
+		Query query = null;
+		
+		if(date != null && !date.isEmpty()){
+			qry.append(" AND enddate >= NOW()");
+		}
+		qry.append(" order by createddate desc");
+		
+		query = entityManager.createNativeQuery(qry.toString());
+		query.setParameter("owner", userid);
+		query.setParameter("userid", "%"+userid+"%");	
+		
+		meetingList= (List<Meetings>) query.getResultList();
+		return meetingList;
+
+	}
 
 
+	
 	
 	
 

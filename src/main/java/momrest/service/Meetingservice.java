@@ -51,6 +51,16 @@ public class Meetingservice implements IMeetingservice {
 		return meetingDao.getLatestMeetingID();
 	}
 
+	@Override
+	public int getMeetingCountV1(String userid, String date) {
+		return meetingDao.getMeetingCountV1(userid, date);
+	}
+
+	@Override
+	public List<Meetings> getMeetingListsV1(String userid, String date) {
+		return meetingDao.getMeetingListsV1(userid, date);
+	}
+
 	
 
 }
