@@ -89,12 +89,12 @@ public class MeetingVsTaskDao implements IMeetingVsTaskDao {
 	@Override
 	public List<MeetingVsTask> getTaskListsV1(String userid, String tasktype, String date) {
 		
-		StringBuilder qry = new StringBuilder("SELECT * FROM tblmeetingvstask WHERE (assignee=:assignee OR responsible like :userid)");
+		StringBuilder qry = new StringBuilder("FROM MeetingVsTask WHERE (assignee=?1 OR responsible like ?2)");
 		List<MeetingVsTask> MVTList = new ArrayList<MeetingVsTask>();
 		Query query = null;
 		
 		if(tasktype != null && !tasktype.isEmpty()){
-			qry.append(" AND tasktype=:tasktype");
+			qry.append(" AND tasktype=?3");
 		}
 		
 		if(date != null && !date.isEmpty()){
@@ -102,11 +102,11 @@ public class MeetingVsTaskDao implements IMeetingVsTaskDao {
 		}
 		qry.append(" order by createddate desc");
 		
-		query = entityManager.createNativeQuery(qry.toString());
-		query.setParameter("assignee", userid);
-		query.setParameter("userid", "%"+userid+"%");	
+		query = entityManager.createQuery(qry.toString());
+		query.setParameter(1, userid);
+		query.setParameter(2, "%"+userid+"%");	
 		if(tasktype != null && !tasktype.isEmpty())
-			query.setParameter("tasktype", tasktype);
+			query.setParameter(3, tasktype);
 		
 		MVTList = (List<MeetingVsTask>) query.getResultList();
 		return MVTList;
@@ -115,11 +115,9 @@ public class MeetingVsTaskDao implements IMeetingVsTaskDao {
 	@Override
 	public List<MeetingVsTask> getMeetVsTaskByMeetingId(int meetingId) {
 		
-		List<MeetingVsTask> MVTList = new ArrayList<MeetingVsTask>();
-		
-		Query query = entityManager.createNativeQuery("SELECT * FROM tblmeetingvstask WHERE meetingid=:meetingid order by createddate desc");
-		query.setParameter("meetingid", meetingId);
-		MVTList = (List<MeetingVsTask>) query.getResultList();
+		String hql="FROM MeetingVsTask as a WHERE a.meetingid=?1 order by a.createddate desc";
+		List<MeetingVsTask> MVTList=entityManager.createQuery(hql).setParameter(1, meetingId).getResultList();
+	
 		return MVTList;
 		
 	}

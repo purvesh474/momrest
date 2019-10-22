@@ -185,14 +185,16 @@ public class MeetingController {
 	
 	@PutMapping("updateV1/{meetingid}")
 	public ResponseEntity<Meetings> updateMeetingV1(@PathVariable(value="meetingid") int meetingid ,@RequestBody Meetings meeting){
-		
+		Meetings meetingupdated = null;
 		try {
 			meetingServ.updateMeeting(meeting, meetingid);
+			meetingupdated = meetingServ.getMeetingById(meetingid);
+			
 		}catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
-		return new ResponseEntity<Meetings>(meeting,HttpStatus.OK);
+		return new ResponseEntity<Meetings>(meetingupdated,HttpStatus.OK);
 	}
 	
 	@GetMapping("search/{email}")

@@ -61,6 +61,7 @@ public class MeetingsDao implements IMeetings {
 		meetingByID.setCustom3(meeting.getCustom3());
 		meetingByID.setStartdate(meeting.getStartdate());
 		meetingByID.setEnddate(meeting.getEnddate());
+		meetingByID.setUpdateddate(meeting.getUpdateddate());
 		meetingByID.setUpdatedby(meeting.getUpdatedby());
 		meetingByID.setStatus(meeting.getStatus());
 		meetingByID.setIstaskcreated(meeting.getIstaskcreated());
@@ -115,7 +116,8 @@ public class MeetingsDao implements IMeetings {
 
 	@Override
 	public List<Meetings> getMeetingListsV1(String userid, String date) {
-		StringBuilder qry = new StringBuilder("SELECT * FROM tblmeeting WHERE (owner=:owner OR participants like :userid)");
+				
+		StringBuilder qry = new StringBuilder("FROM Meetings WHERE (owner=?1 OR participants like ?2)");
 		List<Meetings> meetingList = new ArrayList<Meetings>();
 		Query query = null;
 		
@@ -124,9 +126,9 @@ public class MeetingsDao implements IMeetings {
 		}
 		qry.append(" order by createddate desc");
 		
-		query = entityManager.createNativeQuery(qry.toString());
-		query.setParameter("owner", userid);
-		query.setParameter("userid", "%"+userid+"%");	
+		query = entityManager.createQuery(qry.toString());
+		query.setParameter(1, userid);
+		query.setParameter(2, "%"+userid+"%");
 		
 		meetingList= (List<Meetings>) query.getResultList();
 		return meetingList;

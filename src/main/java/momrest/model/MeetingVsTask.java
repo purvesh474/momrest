@@ -1,7 +1,6 @@
 package momrest.model;
 
 import java.sql.Time;
-import java.sql.Timestamp;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,7 +24,7 @@ public class MeetingVsTask {
 	
 	private String assignee;
 	
-	private Timestamp duedate;
+	private String duedate;
 	
 	private String subject;
 	
@@ -33,9 +32,9 @@ public class MeetingVsTask {
 	
 	private int status;
 	
-	private Timestamp createddate;
+	private String createddate;
 	
-	private Timestamp updateddate;
+	private String updateddate;
 	
 	//Change DataType in DB
 	private String updatedby;
@@ -80,11 +79,11 @@ public class MeetingVsTask {
 		this.assignee = assignee;
 	}
 
-	public Timestamp getDuedate() {
+	public String getDuedate() {
 		return duedate;
 	}
 
-	public void setDuedate(Timestamp duedate) {
+	public void setDuedate(String duedate) {
 		this.duedate = duedate;
 	}
 
@@ -112,19 +111,19 @@ public class MeetingVsTask {
 		this.status = status;
 	}
 
-	public Timestamp getCreateddate() {
+	public String getCreateddate() {
 		return createddate;
 	}
 
-	public void setCreateddate(Timestamp createddate) {
+	public void setCreateddate(String createddate) {
 		this.createddate = createddate;
 	}
 
-	public Timestamp getUpdateddate() {
+	public String getUpdateddate() {
 		return updateddate;
 	}
 
-	public void setUpdateddate(Timestamp updateddate) {
+	public void setUpdateddate(String updateddate) {
 		this.updateddate = updateddate;
 	}
 

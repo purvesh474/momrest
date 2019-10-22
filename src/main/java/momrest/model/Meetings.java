@@ -1,8 +1,6 @@
 package momrest.model;
 
 
-import java.sql.Timestamp;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -47,12 +45,12 @@ public class Meetings {
 	
 	//startdate
 	
-	private Timestamp startdate;
+	private String startdate;
 	
-	private Timestamp enddate;
+	private String enddate;
 	
-	private Timestamp createddate;
-	private Timestamp updateddate;
+	private String createddate;
+	private String updateddate;
 	private String updatedby;
 	private int status;
 	private int istaskcreated;
@@ -73,16 +71,16 @@ public class Meetings {
 	public void setIstaskcreated(int istaskcreated) {
 		this.istaskcreated = istaskcreated;
 	}
-	public Timestamp getStartdate() {
+	public String getStartdate() {
 		return startdate;
 	}
-	public void setStartdate(Timestamp startdate) {
+	public void setStartdate(String startdate) {
 		this.startdate = startdate;
 	}
-	public Timestamp getEnddate() {
+	public String getEnddate() {
 		return enddate;
 	}
-	public void setEnddate(Timestamp enddate) {
+	public void setEnddate(String enddate) {
 		this.enddate = enddate;
 	}
 	
@@ -171,16 +169,16 @@ public class Meetings {
 		this.custom3 = custom3;
 	}
 
-	public Timestamp getCreateddate() {
+	public String getCreateddate() {
 		return createddate;
 	}
-	public void setCreateddate(Timestamp createddate) {
+	public void setCreateddate(String createddate) {
 		this.createddate = createddate;
 	}
-	public Timestamp getUpdateddate() {
+	public String getUpdateddate() {
 		return updateddate;
 	}
-	public void setUpdateddate(Timestamp updateddate) {
+	public void setUpdateddate(String updateddate) {
 		this.updateddate = updateddate;
 	}
 	public String getUpdatedby() {
