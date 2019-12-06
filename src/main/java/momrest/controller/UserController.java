@@ -12,6 +12,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,9 +39,10 @@ public class UserController {
 	
 	@Autowired
 	private IUserService userServ;
-	
+
 	@GetMapping("all")
 	public ResponseEntity<List<User>> getAllUsers(){
+		System.out.println("in ---------------------");
 		List<User> userList=new ArrayList<>();
 		try {
 			userList=userServ.getAllUsers();

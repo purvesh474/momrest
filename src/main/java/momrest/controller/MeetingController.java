@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +26,7 @@ import momrest.model.User;
 import momrest.service.IMeetingservice;
 import momrest.service.IParticipantsVsMeetingService;
 import momrest.service.IUserService;
+import momrest.service.SendEmail;
 
 @RestController
 @RequestMapping("meeting")
@@ -112,6 +114,10 @@ public class MeetingController {
 			
 			pvmserv.addPVM(pvm);
 		}
+		
+		SendEmail sem = new SendEmail();
+		sem.calenderInvite(meeting);
+		sem.sendMail(participants, meeting.getSubject());
 		}
 		if(flag==false) {
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
